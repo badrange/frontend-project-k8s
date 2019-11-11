@@ -14,10 +14,14 @@ workflows:
           # Don't copy this! We only use following 2 lines for chart development in this repository.
           chart_name: './chart'
           chart_repository: ''
-          
+
+          pre-steps:
+            - run: |
+                echo "export FOO='bar'" >> $BASH_ENV
           codebase-build:
-            # - silta/npm-install-build:
-            #     build-command: ''
+            - run: |
+                echo $FOO
+
             - silta/npm-install-build:
                 path: './hello'
                 build-command: ''
