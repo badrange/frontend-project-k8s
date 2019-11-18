@@ -5,6 +5,10 @@ metadata:
   name: {{ $.Release.Name }}-{{ $index }}
   labels:
     {{ include "frontend.release_labels" $ | indent 4 }}
+  annotations:
+    osiris.deislabs.io/enabled: "true"
+    osiris.deislabs.io/deployment: {{ $.Release.Name }}-{{ $index }}
+    osiris.deislabs.io/ingressHostname: {{ template "frontend.domain" $ }}
 spec:
   type: NodePort
   externalTrafficPolicy: Local
