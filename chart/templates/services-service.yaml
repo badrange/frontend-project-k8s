@@ -8,7 +8,7 @@ metadata:
   annotations:
     osiris.deislabs.io/enabled: "true"
     osiris.deislabs.io/deployment: {{ $.Release.Name }}-{{ $index }}
-    osiris.deislabs.io/ingressHostname: {{ template "frontend.domain" $ }}
+    osiris.deislabs.io/loadBalancerHostname: {{ $.Release.Name }}-{{ $index }}
 spec:
   type: NodePort
   externalTrafficPolicy: Local
