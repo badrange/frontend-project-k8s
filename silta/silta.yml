@@ -33,6 +33,9 @@ exposeDomains:
     hostname: gke-ingress-frontend.dev.wdr.io
     type: gke
     staticIpAddressName: gke-ingress-frontend
+    ssl:
+      enabled: true
+      issuer: letsencrypt-staging
 
 domainPrefixes: ['fi', 'lv' ]
 
