@@ -26,9 +26,11 @@ app: frontend
 # exposeDomains:
 #   - hostname: example.com
 #   - hostname: www.example.com
-#   -   ssl:
-#   -     enabled: true
-#   -     issuer: letsencrypt-staging
+#       type: gke
+#       staticIpAddressName: example-com-production
+#       ssl:
+#         enabled: true
+#         issuer: letsencrypt-staging
 exposeDomains: {}
 
 # Add prefixes to the generated per-branch domains, to be used for projects that need to respond

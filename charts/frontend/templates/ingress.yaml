@@ -51,6 +51,7 @@ kind: Ingress
 metadata:
   name: {{ $.Release.Name }}-nginx-{{ $index }}
   annotations:
+    {{ if eq $domain.type "traefik" }}
     kubernetes.io/ingress.class: traefik
     {{- if $domain.ssl }}
     {{- if $domain.ssl.enabled }}
@@ -61,6 +62,17 @@ metadata:
     traefik.ingress.kubernetes.io/frontend-entry-points: http
     ingress.kubernetes.io/ssl-redirect: "false"
     {{- end }}
+    {{- end }}
+
+    {{ if eq $domain.type "gke" }}
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    cert-manager.io/cluster-issuer: letsencrypt
+    {{- end }}
+
+    {{ if $domain.staticIpAddressName }}
+    kubernetes.io/ingress.global-static-ip-name: {{ $domain.staticIpAddressName }}
+    {{- end }}
+
   labels:
     {{ include "frontend.release_labels" $ | indent 4 }}
 spec:
@@ -74,7 +86,7 @@ spec:
   - host: {{ $domain.hostname }}
     http:
       paths:
-      - path: /
+      - path: {{ if eq $domain.type "gke" }}/*{{ else }}/{{ end }}
         backend:
           serviceName: {{ $.Release.Name }}-nginx
           servicePort: 80

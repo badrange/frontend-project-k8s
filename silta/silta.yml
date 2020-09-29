@@ -28,6 +28,12 @@ services:
         command: echo $(date) > /app/files/lastupdate.txt
         schedule: "~ * * * *"
 
+exposeDomains:
+  gke-test:
+    hostname: gke-ingress-frontend.dev.wdr.io
+    type: gke
+    staticIpAddressName: gke-ingress-frontend
+
 domainPrefixes: ['fi', 'lv' ]
 
 mounts:
